@@ -27,8 +27,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link text-primary" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link " href="aboutus.html">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.html">What We Offer</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link " href="aboutus.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="services.html">What We Offer</a></li> -->
                         <li class="nav-item"><a class="nav-link" href="login.php">Log-In</a></li>
                     </ul>
                 </div>

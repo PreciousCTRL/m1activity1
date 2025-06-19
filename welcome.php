@@ -27,9 +27,9 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link text-primary" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link " href="aboutus.html">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.html">What We Offer</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.php">Log-In</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link " href="aboutus.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="services.html">What We Offer</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Log-out</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,10 +52,10 @@
         <header class="masthead">
             <div class="container px-4 px-lg-5 h-100">
                 <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
+                    <div class="col-lg-8 align-self-end mb-5">
 
                         <?php 
-                         echo '<h1 class="text-white font-weight-bold">Welcome '. $fname.',<br> We are here one Assignment at a Time.</h1>';
+                         echo '<h1 class="text-white font-weight-bold">Welcome '. $fname.'!</h1><h1 class = "fs-3 text-light"><br> We are here one Assignment at a Time.</h1>';
                         ?>
                         <hr class="divider" />
 
@@ -63,9 +63,6 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">We offer personalized help with homework, projects, and study skills—making schoolwork easier and more effective for students at all levels.</p>
-                        
-                        <br>
-                        <a class="btn btn-primary btn-xl mt-3" href="logout.php">Log Out</a>
                     </div>
                     
                 </div>

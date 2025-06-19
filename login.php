@@ -27,8 +27,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link text-dark" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-dark" href="aboutus.html">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link text-dark" href="services.html">What We Offer</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link text-dark" href="aboutus.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="services.html">What We Offer</a></li> -->
                         <li class="nav-item"><a class="nav-link text-primary" href="login.php">Log-In</a></li>
                     </ul>
                 </div>
@@ -46,11 +46,13 @@
             $found = false;
             foreach ($users as $userLine){
                 $data = explode("|",$userLine);
-                if ($data[12] == $inputUsername && $data[13] == $inputPassword){
-                $found = true;
-                $_SESSION['user_data']=$data;
-                header("Location: welcome.php");
-                exit;
+                if (count($data) > 13) {
+                    if ($data[12] == $inputUsername && $data[13] == $inputPassword) {
+                        $found = true;
+                        $_SESSION['user_data'] = $data;
+                        header("Location: welcome.php");
+                        exit;
+                    }
                 }
             }
             if (!$found){
@@ -76,14 +78,14 @@
                         <form id="loginForm" method="post" action="login.php">
                             <!-- Username input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" name="username"id="username" type="text" placeholder="username" data-sb-validations="required,username" />
+                                <input class="form-control" name="username"id="username" type="text" placeholder="username" data-sb-validations="required,username" required />
                                 <label for="email">Username</label>
                                 <div class="invalid-feedback" data-sb-feedback="username:required">An username is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="username:username">username is not valid.</div>
                             </div>
                             <!-- Password input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control " name="password" id="password" type="password" placeholder="example@email.com" data-sb-validations="required" />
+                                <input class="form-control " name="password" id="password" type="password" placeholder="example@email.com" data-sb-validations="required" required/>
                                 <label for="password">Password</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A Password is Required</div>
                             </div>
