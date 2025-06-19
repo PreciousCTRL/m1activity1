@@ -22,7 +22,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 position-static" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand text-dark" href="#page-top">EduAssist Solutions</a>
+                <a class="navbar-brand text-dark" href="index.php">EduAssist Solutions</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
@@ -46,9 +46,11 @@
                 </div>
 
                 <?php
+                $message = " ";
+                $call = 0;
                 if ($_SERVER["REQUEST_METHOD"]=="POST"){
                     //personal Information
-                    $fname = $_POST['fname'];
+                    $fname = trim($_POST["fname"]);
                     $lname = $_POST['lname'];
                     $mname = $_POST['mname'];
                     $gender = $_POST['gender'];
@@ -68,8 +70,11 @@
                     $password = $_POST['password'];
                     $cpassword = $_POST['cpassword'];
 
-                
-                    if ($password !== $cpassword) {
+                    if (!preg_match("/^[A-Za-z\s]{1,3}$/", $fname)) {
+                        $message = "<div class = 'row'><div class='col-md-2'><div class='alert alert-danger'>Invalid first name. Only letters and spaces (1–3 characters) allowed.</div></div></div>";
+                        $call = 1;
+                    }
+                    else if ($password !== $cpassword) {
                         echo "<script>alert('Password do not match. Please try again.');
                         window.history.back();</script>";
                     }  else {
@@ -83,6 +88,7 @@
                                 window.location.href = 'login.php';
                             </script>";
                     }
+
                 }   
                 ?>
 
@@ -101,16 +107,16 @@
                                     <label for="fname">Name: <label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" name="fname" id="fname" type="text" placeholder="First Name">
+                                    <input class="form-control" name="fname" id="fname" type="text" placeholder="First Name" required>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" name="lname" id="lname" type="text" placeholder="Last Name">
+                                    <input class="form-control" name="lname" id="lname" type="text" placeholder="Last Name" required>
                                 </div>
                                 <div class="col-md-2">
                                     <input class="form-control" name="mname" id="mname" type="text" placeholder="M.I">
                                 </div>
                             </div>
-
+                            <?php if ($call == 1){echo $message;}?>
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="gender">Gender: <label>
@@ -130,7 +136,7 @@
                                     <label for="bday">Birtday: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="date" id="bday" name="bday">
+                                    <input class="form-control" type="date" id="bday" name="bday" required>
                                 </div>
                             </div>
 
@@ -139,7 +145,7 @@
                                     <label for="pnum">Phone Number: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="tel" id="pnum" name="pnum" placeholder="(0992)-123-1234">
+                                    <input class="form-control" type="tel" id="pnum" name="pnum" placeholder="(0992)-123-1234" required>
                                 </div>
                             </div>
 
@@ -148,7 +154,7 @@
                                     <label for="email">Email: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="email" id="email" name="email" placeholder="example@mail.com">
+                                    <input class="form-control" type="email" id="email" name="email" placeholder="example@mail.com" required>
                                 </div>
                             </div>
 
@@ -163,7 +169,7 @@
                                     <label for="street">Street: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="street" id="street" type="text" placeholder="Street Name">
+                                    <input class="form-control" name="street" id="street" type="text" placeholder="Street Name" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -171,7 +177,7 @@
                                     <label for="city">City: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="city" id="city" type="text" placeholder="City Name">
+                                    <input class="form-control" name="city" id="city" type="text" placeholder="City Name" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -179,7 +185,7 @@
                                     <label for="province">Province/ State: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="province" id="province" type="text" placeholder="province Name">
+                                    <input class="form-control" name="province" id="province" type="text" placeholder="province Name" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -187,7 +193,7 @@
                                     <label for="zip">Zip Code: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="zip" id="zip" type="number" placeholder="Zip Code">
+                                    <input class="form-control" name="zip" id="zip" type="number" placeholder="Zip Code" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -195,7 +201,7 @@
                                     <label for="country">Country: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="country" id="country" type="text" placeholder="Country Name">
+                                    <input class="form-control" name="country" id="country" type="text" placeholder="Country Name" required>
                                 </div>
                             </div>
 
@@ -209,7 +215,7 @@
                                     <label for="username">Username: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="username" id="username" type="text" placeholder="Username">
+                                    <input class="form-control" name="username" id="username" type="text" placeholder="Username" required>
                                 </div>
                             </div>
 
@@ -218,7 +224,7 @@
                                     <label for="password">Password: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="password" id="password" type="password">
+                                    <input class="form-control" name="password" id="password" type="password" required>
                                 </div>
                             </div>
 
@@ -227,7 +233,7 @@
                                     <label for="cpassword">Confirm Password: <label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="cpassword" id="cpassword" type="password">
+                                    <input class="form-control" name="cpassword" id="cpassword" type="password" required>
                                 </div>
                             </div>
 
