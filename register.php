@@ -49,6 +49,7 @@
                 $message = " ";
                 $call = 0;
                 $minAge = 18;
+                $a = 0;
                 $fname = $lname = $mname = $gender = $bday = $pnum = $email =
                 $street = $city = $province = $zip = $country =
                 $username ="";
@@ -63,7 +64,6 @@
                     $fname = trim($_POST["fname"]);
                     $lname = trim($_POST['lname']);
                     $mname = trim($_POST['mname']);
-                    $fullName = ucwords($fname." ".$mname." ".$lname);
                     $gender = $_POST['gender'];
                     $bday = $_POST['bday'];
                     $pnum = $_POST['pnum'];
@@ -83,103 +83,12 @@
 
 
 
-                    if (!preg_match("/^[A-Za-z\s]{1,50}$/", $fullName)) {
-                        $message = "
-                        <div class='row mb-3'>
-                            <div class='col-md'>
-                                <div class='alert alert-danger'>
-                                    Invalid name. Only letters and spaces (maximum of 50 characters) allowed.
-                                </div>
-                            </div>
-                        </div>";
-                        $call = 1;
-                    }
-                    else if (empty($fname) || empty($lname)){
-                        $message = "
-                        <div class='row mb-3'>
-                            <div class='col-md'>
-                                <div class='alert alert-danger'>
-                                    Do not leave First name or Last name empty!
-                                </div>
-                            </div>
-                        </div>";
-                        $call = 2;
-                    }
-                    else if ($gender == "select"){
-                        $message = "
-                        <div class='row mb-3'>
-                            <div class='col-md'>
-                                <div class='alert alert-danger'>
-                                    Select a gender!
-                                </div>
-                            </div>
-                        </div>";
-                        $call = 3;
-                    }
-                    else if (!empty($bday)) {
-                        $dobDate = new DateTime($bday);
-                        $today = new DateTime();
-                        $age = $dobDate->diff($today)->y;
-
-                        if ($age < $minAge) {
-                            $message = "
-                            <div class='row mb-3'>
-                                <div class='col-md'>
-                                    <div class='alert alert-danger'>
-                                        You must be at least 18 years old to register
-                                    </div>
-                                </div>
-                            </div>";
-                            $call = 4;
-                        }
-                    } 
-                    else if (empty($bday)) {
-                        $message = "
-                            <div class='row mb-3'>
-                                <div class='col-md'>
-                                    <div class='alert alert-danger'>
-                                        Date of birth is required
-                                    </div>
-                                </div>
-                            </div>";
-                            $call = 5;
-                            echo "5";
-                    }
-                    else if (!preg_match("/^09\d{2}[- ]?\d{3}[- ]?\d{4}$/", $pnum)) {
-                        $message = "
-                        <div class='row mb-3'>
-                            <div class='col-md'>
-                                <div class='alert alert-danger'>
-                                    Invalid phone number!
-                                </div>
-                            </div>
-                        </div>";
-                        $call = 6;
-                    }
-                    else if (empty($pnum)){
-                        $message = "
-                        <div class='row mb-3'>
-                            <div class='col-md'>
-                                <div class='alert alert-danger'>
-                                    Please put a phone number!
-                                </div>
-                            </div>
-                        </div>";
-                        $call = 7;
-                        echo "DEBUG: call = 7<br>";
-                    }
-                    else if (!preg_match("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.(com|net|org/", $email)) {
-                        $message = "
-                        <div class='row mb-3'>
-                            <div class='col-md'>
-                                <div class='alert alert-danger'>
-                                    Invalid email address!
-                                </div>
-                            </div>
-                        </div>";
-                        $call = 8;
-                    }
                     
+                
+                    
+                    if ($call != 13){
+                        $a = 1;
+                    }
                     else if ($password !== $cpassword) {
                         echo "<script>alert('Password do not match. Please try again.');
                         window.history.back();</script>";
@@ -223,12 +132,31 @@
                                 </div>
                             </div>
                             <?php 
-                                if ($call == 1){
-                                    echo $message;
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                $fullName = ucwords($fname." ".$mname." ".$lname);
+                                if (!preg_match("/^[A-Za-z\s]{1,50}$/", $fullName)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid name. Only letters and spaces (maximum of 50 characters) allowed.
+                                            </div>
+                                        </div>
+                                    </div>";
                                 }
-                                else if ($call == 2){
-                                    echo $message;
+                                else if (empty($fname) || empty($lname)){
+                                    echo 
+                                    "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Do not leave First name or Last name empty!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
                                 }
+                                
+                            }
                             ?>
                             <div class="row mb-3">
                                 <div class="col-md-2">
@@ -244,9 +172,21 @@
                                 </div>
                             </div>
                             <?php 
-                                if ($call == 3){
-                                    echo $message;
+                            if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if ($gender == "select"){
+                                echo "
+                                <div class='row mb-3'>
+                                    <div class='col-md'>
+                                        <div class='alert alert-danger'>
+                                            Select a gender!
+                                        </div>
+                                    </div>
+                                </div>";
+                                } else {
+                                    $call += 1;
                                 }
+                                
+                            }
                              ?>
                             <div class="row mb-3">
                                 <div class="col-md-2">
@@ -257,13 +197,40 @@
                                 </div>
                             </div>
                             <?php 
-                                if ($call == 4){
-                                    echo $message;
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                    
+                                        $dobDate = new DateTime($bday);
+                                        $today = new DateTime();
+                                        $age = $dobDate->diff($today)->y;
+
+                                        if ($age < $minAge) {
+                                            echo "
+                                            <div class='row mb-3'>
+                                                <div class='col-md'>
+                                                    <div class='alert alert-danger'>
+                                                        You must be at least 18 years old to register
+                                                    </div>
+                                                </div>
+                                            </div>";
+
+                                        }
+                                else if (empty($bday)) {
+                                    echo "
+                                        <div class='row mb-3'>
+                                            <div class='col-md'>
+                                                <div class='alert alert-danger'>
+                                                    Date of birth is required
+                                                </div>
+                                            </div>
+                                        </div>";
+                                }else {
+                                    $call += 1;
                                 }
-                                if ($call == 5){
-                                    echo $message;
-                                }
+                            }
+                            
                              ?>
+
+
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="pnum">Phone Number: <label>
@@ -272,13 +239,25 @@
                                     <input class="form-control" type="tel" id="pnum" name="pnum" placeholder="(0992)-123-1234" value="<?php echo htmlspecialchars($pnum); ?>">
                                 </div>
                             </div>
+
+
                             <?php 
-                                if ($call == 6){
-                                    echo $message;
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if ($gender == "select"){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Select a gender!
+                                            </div>
+                                        </div>
+                                    </div>";
+
+                                }else {
+                                    $call += 1;
                                 }
-                                else if ($call == 7){
-                                    echo $message;
-                                }
+                            
+                            }
                              ?>
                             <div class="row mb-3">
                                 <div class="col-md-2">
@@ -289,11 +268,29 @@
                                 </div>
                             </div>
                             <?php 
-                                if ($call == 8){
-                                    echo $message;
-                                }else if ($call == 9){
-                                    echo $message;
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($email)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input an Email!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.(com|net|org|edu|gov|[a-zA-Z]{2})$/", $email)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid email!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
                                 }
+                            
+                            }
                              ?>
                             <div class="row">
                                 <div class="col-md">
@@ -309,6 +306,33 @@
                                     <input class="form-control" name="street" id="street" type="text" placeholder="Street Name" value="<?php echo htmlspecialchars($street); ?>">
                                 </div>
                             </div>
+
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($street)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a street!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^[a-zA-Z\s]{2,50}$/", $street)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid street!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                            
+                            }
+                             ?>
+
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="city">City: <label>
@@ -317,6 +341,33 @@
                                     <input class="form-control" name="city" id="city" type="text" placeholder="City Name" value="<?php echo htmlspecialchars($city); ?>">
                                 </div>
                             </div>
+
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($city)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a city!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^[a-zA-Z0-9\s.,'#\-]{5,100}$/", $city)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid city!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                            
+                            }
+                             ?>
+
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="province">Province/ State: <label>
@@ -325,6 +376,33 @@
                                     <input class="form-control" name="province" id="province" type="text" placeholder="province Name" value="<?php echo htmlspecialchars($province); ?>">
                                 </div>
                             </div>
+
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($province)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a province/state!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^[a-zA-Z\s]{2,50}$/", $province)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid province/state!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                            
+                            }
+                             ?>
+
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="zip">Zip Code: <label>
@@ -333,6 +411,34 @@
                                     <input class="form-control" name="zip" id="zip" type="number" placeholder="Zip Code" value="<?php echo htmlspecialchars($zip); ?>">
                                 </div>
                             </div>
+
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($zip)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a zip!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^\d{4}$/", $zip)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid zip number!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                           
+                            }
+                             ?>
+
+
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="country">Country: <label>
@@ -341,6 +447,32 @@
                                     <input class="form-control" name="country" id="country" type="text" placeholder="Country Name" value="<?php echo htmlspecialchars($country); ?>">
                                 </div>
                             </div>
+
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($country)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a country!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^[a-zA-Z\s]{2,75}$/", $country)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid country!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                            
+                            }
+                             ?>
 
                             <div class="row">
                                 <div class="col-md">
@@ -356,6 +488,32 @@
                                 </div>
                             </div>
 
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($username)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a username!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^[a-zA-Z0-9_]{5,20}$/", $username)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid username! letters, numbers, and underscores only, 5 to 20 characters
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                              
+                            }
+                             ?>
+
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label for="password">Password: <label>
@@ -365,6 +523,32 @@
                                 </div>
                             </div>
 
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($password)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a password!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/", $password)) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Invalid password! Minimum 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                                
+                            }
+                             ?>
+
                             <div class="row">
                                 <div class="col-md-2">
                                     <label for="cpassword">Confirm Password: <label>
@@ -373,7 +557,44 @@
                                     <input class="form-control" name="cpassword" id="cpassword" type="password">
                                 </div>
                             </div>
+                            
+                            <?php 
+                                if ($_SERVER["REQUEST_METHOD"]=="POST"){
+                                if (empty($password)){
+                                    echo "
+                                    <div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Input a confirmed password!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }else if ($password !== $cpassword) {
+                                    echo "<div class='row mb-3'>
+                                        <div class='col-md'>
+                                            <div class='alert alert-danger'>
+                                                Passwords does not match!
+                                            </div>
+                                        </div>
+                                    </div>";
+                                } else {
+                                    $call += 1;
+                                }
+                            }
+                            
+                            if ($call == 13){
+                                $line = implode("|",[$fname, $lname, $mname, $gender, $bday, $pnum, $email, 
+                                $street, $city, $province, $zip, $country,
+                                $username, $password, $cpassword]). "\n";
+                                file_put_contents("user.txt", $line, FILE_APPEND);
 
+                                echo "<script>
+                                        alert('Registration Successful! Proceeding to login...');
+                                        window.location.href = 'login.php';
+                                    </script>";
+                            }
+
+                             ?>
                             
 
 

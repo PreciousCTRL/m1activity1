@@ -40,6 +40,22 @@
         if (isset($_SESSION["user_data"])){
             $userData = $_SESSION['user_data'];
             $fname = $userData[0];
+            $lname = $userData[1];
+            $mname = $userData[2];
+            $gender = $userData[3];
+            $bday = $userData[4];
+            $pnum = $userData[5];
+            $email = $userData[6];
+
+            //Address Details
+            $street = $userData[7];
+            $city = $userData[9];
+            $province = $userData[10];
+            $zip = $userData[11];
+            $country = $userData[12];
+
+            //Account Details
+            $username = $userData[13];
         }
         ?>
 
@@ -63,8 +79,13 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">We offer personalized help with homework, projects, and study skills—making schoolwork easier and more effective for students at all levels.</p>
+                        <a class="btn btn-primary btn-xl" href="#profile">View Profile</a>
                     </div>
-                    
+                </div>
+            </div>
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row align-items-center justify-content-center">
+                    tite
                 </div>
             </div>
         </header>
