@@ -43,19 +43,26 @@
             $lname = $userData[1];
             $mname = $userData[2];
             $gender = $userData[3];
-            $bday = $userData[4];
+            $bday = str_replace(" ", "",$userData[4]);
             $pnum = $userData[5];
             $email = $userData[6];
 
             //Address Details
             $street = $userData[7];
-            $city = $userData[9];
-            $province = $userData[10];
-            $zip = $userData[11];
-            $country = $userData[12];
+            $city = str_ireplace("city", "",$userData[8]);
+            $province = $userData[9];
+            $zip = $userData[10];
+            $country = $userData[11];
 
             //Account Details
-            $username = $userData[13];
+            $username = $userData[12];
+            
+            if (empty($mname)){
+                $fullName = ucwords($fname." ".$lname);
+            }
+            else{
+                $fullName = ucwords($fname." ".strToUpper($mname).". ".$lname);
+            }
         }
         ?>
 
@@ -71,7 +78,7 @@
                     <div class="col-lg-8 align-self-end mb-5">
 
                         <?php 
-                         echo '<h1 class="text-white font-weight-bold">Welcome '. $fname.'!</h1><h1 class = "fs-3 text-light"><br> We are here one Assignment at a Time.</h1>';
+                         echo '<h1 class="text-white font-weight-bold">Welcome back '. $fname.'!</h1><h1 class = "fs-3 text-light"><br> We are here to assist you one assignment at a time.</h1>';
                         ?>
                         <hr class="divider" />
 
@@ -81,18 +88,54 @@
                         <p class="text-white-75 mb-5">We offer personalized help with homework, projects, and study skills—making schoolwork easier and more effective for students at all levels.</p>
                         <a class="btn btn-primary btn-xl" href="#profile">View Profile</a>
                     </div>
+                    
+                    
                 </div>
             </div>
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row align-items-center justify-content-center">
-                    tite
-                </div>
-            </div>
+            
+            
         </header>
+        <div class="container-fluid px-4 px-lg-5 my-5 p-5 text-center">
+            <h1 >User Profile</h1>
+            <img src="no_profile.png" class="rounded-circle mb-3" width="200px"  id="profile">
+            <p style="color:#A9A9A9"><?php echo "@".$username ?> </p>
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-start">
+                    <hr style="width:100%;margin:auto;height:5px;text-align:center">
+                    <p class="mt-4"><strong>Name:</strong>  <?php echo $fullName ?> </p>
+                    <p><strong>Gender:</strong>  <?php echo ucwords($gender) ?> </p>
+                    <p><strong>Date of Birth:</strong>  
+                        <?php 
+                            $date = new DateTime($bday);
+                            echo $date->format('F j, Y'); 
+                        ?> 
+                    </p>
+                    <p><strong>Phone Number:</strong>  
+                        <?php echo "(".substr($pnum, 0, 4).") ".substr($pnum, 4, 3)." ".substr($pnum, 7, 7); ?> 
+                    </p>
+                    <p><strong>Email:</strong>  <?php echo $email ?> </p>
+                    <p><strong>Home Address:</strong>  
+                        <?php echo ucwords($street. " ". $city. " City, ". $province. " ".$zip). " ".$country;?> 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
         <!-- Footer-->
         <footer class="bg-light py-5">
             <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2025 - Precious Lansigan</div></div>
         </footer>
+
+
+        <!-- <div class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2025 - Precious Lansigan</div></div>
+        </div> -->
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- SimpleLightbox plugin JS-->

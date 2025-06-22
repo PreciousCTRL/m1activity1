@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">We offer personalized help with homework, projects, and study skills—making schoolwork easier and more effective for students at all levels.</p>
-                        <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+                        <a class="btn btn-primary btn-xl" href="login.php">Find Out More</a>
                     
                     </div>
                     

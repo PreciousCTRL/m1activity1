@@ -318,7 +318,7 @@
                                             </div>
                                         </div>
                                     </div>";
-                                }else if (!preg_match("/^[a-zA-Z\s]{2,50}$/", $street)) {
+                                }else if (!preg_match("/^[a-zA-Z0-9 ,.'#\-\/&()]{5,100}$/", $street)) {
                                     echo "<div class='row mb-3'>
                                         <div class='col-md'>
                                             <div class='alert alert-danger'>
@@ -521,8 +521,20 @@
                                 <div class="col-md-10">
                                     <input class="form-control" name="password" id="password" type="password">
                                 </div>
+                                <div class ="text-left">
+                                    <input class = "me-1 mt-3 ms-1"type="checkbox" onclick="myFunction()">Show Password
+                                    <script>
+                                        function myFunction() {
+                                        var x = document.getElementById("password");
+                                        if (x.type === "password") {
+                                            x.type = "text";
+                                        } else {
+                                            x.type = "password";
+                                        }
+                                        }
+                                    </script>
+                                </div>
                             </div>
-
                             <?php 
                                 if ($_SERVER["REQUEST_METHOD"]=="POST"){
                                 if (empty($password)){
@@ -555,6 +567,19 @@
                                 </div>
                                 <div class="col-md-10">
                                     <input class="form-control" name="cpassword" id="cpassword" type="password">
+                                </div>
+                                <div class ="text-left mb-3">
+                                    <input class = "me-1 mt-3 ms-1"type="checkbox" onclick="myFunction()">Show Password
+                                    <script>
+                                        function myFunction() {
+                                        var x = document.getElementById("cpassword");
+                                        if (x.type === "password") {
+                                            x.type = "text";
+                                        } else {
+                                            x.type = "password";
+                                        }
+                                        }
+                                    </script>
                                 </div>
                             </div>
                             

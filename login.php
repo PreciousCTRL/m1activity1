@@ -87,6 +87,17 @@
                             <div class="form-floating mb-3">
                                 <input class="form-control " name="password" id="password" type="password" placeholder="example@email.com" data-sb-validations="required" required/>
                                 <label for="password">Password</label>
+                                <input class = "me-1 mt-3 ms-1"type="checkbox" onclick="myFunction()">Show Password
+                                <script>
+                                function myFunction() {
+                                var x = document.getElementById("password");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                                }
+                                </script>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A Password is Required</div>
                             </div>
                             <!-- Submit success message-->
