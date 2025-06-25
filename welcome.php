@@ -98,7 +98,7 @@
         <div class="container-fluid px-4 px-lg-5 my-5 p-5 text-center">
             <h1 >User Profile</h1>
             <img src="no_profile.png" class="rounded-circle mb-3" width="200px"  id="profile">
-            <p style="color:#A9A9A9"><?php echo "@".$username ?> </p>
+            <p style="color:black"><?php echo "@".$username ?> </p>
             <div class="row justify-content-center">
                 <div class="col-md-6 text-start">
                     <hr style="width:100%;margin:auto;height:5px;text-align:center">
@@ -117,7 +117,12 @@
                     <p><strong>Home Address:</strong>  
                         <?php echo ucwords($street. " ". $city. " City, ". $province. " ".$zip). " ".$country;?> 
                     </p>
+                    
                 </div>
+                <div class="col-lg-8 align-self-baseline">
+                        
+                        <a class="btn btn-primary btn-xl" href="logout.php">Log Out</a>
+                    </div>
             </div>
         </div>
 

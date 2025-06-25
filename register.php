@@ -353,7 +353,7 @@
                                             </div>
                                         </div>
                                     </div>";
-                                }else if (!preg_match("/^[a-zA-Z0-9\s.,'#\-]{5,100}$/", $city)) {
+                                }else if (!preg_match("/^[a-zA-Z\s.,'#\-]{5,100}$/", $city)) {
                                     echo "<div class='row mb-3'>
                                         <div class='col-md'>
                                             <div class='alert alert-danger'>
@@ -569,9 +569,9 @@
                                     <input class="form-control" name="cpassword" id="cpassword" type="password">
                                 </div>
                                 <div class ="text-left mb-3">
-                                    <input class = "me-1 mt-3 ms-1"type="checkbox" onclick="myFunction()">Show Password
+                                    <input class = "me-1 mt-3 ms-1"type="checkbox" onclick="myCpassword()">Show Password
                                     <script>
-                                        function myFunction() {
+                                        function myCpassword() {
                                         var x = document.getElementById("cpassword");
                                         if (x.type === "password") {
                                             x.type = "text";
